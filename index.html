@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dr. Squatch - Tienda Oficial en Amazon (Storefront Oficial)</title>
+  <meta name="description" content="Visita la tienda oficial de Dr. Squatch en Amazon. Jabones artesanales saponificados en frío, cuidado capilar botánico y desodorantes sin aluminio.">
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            squatch: {
+              dark: '#0c1410',
+              forest: '#183124',
+              leaf: '#2d5a43',
+              amber: '#d97706',
+              rust: '#ea580c',
+              cream: '#fdfbf7',
+              sand: '#e8dfd3'
+            },
+            amazon: {
+              navy: '#131921',
+              subnavy: '#232f3e',
+              orange: '#f08804',
+              yellow: '#febd69',
+              lightGray: '#eaeded',
+              border: '#d5d9d9',
+              green: '#007600',
+              blue: '#007185',
+              priceRed: '#b12704'
+            }
+          },
+          fontFamily: {
+            sans: ['"Amazon Ember"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+            display: ['Montserrat', 'Impact', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & FontAwesome for icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #eaeded;
+      color: #0f1111;
+      overflow-x: hidden;
+    }
+    .font-display { font-family: 'Montserrat', sans-serif; }
+    .font-mono-code { font-family: 'JetBrains Mono', monospace; }
+    
+    /* Smooth custom scrollbars */
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: #131921; }
+    ::-webkit-scrollbar-thumb { background: #d97706; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ea580c; }
+
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    /* Dimension badge overlay */
+    .dim-badge {
+      background: rgba(12, 20, 16, 0.85);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(217, 119, 6, 0.6);
+      color: #febd69;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body class="bg-[#eaeded] min-h-screen flex flex-col antialiased">
+
+  <!-- ========================================================================= -->
+  <!-- 1. AMAZON TOP MASTER NAVIGATION (EMULATED GLOBAL CHROME) -->
+  <!-- ========================================================================= -->
+  <header class="bg-[#131921] text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-[1500px] mx-auto px-3 sm:px-6 py-2 flex items-center justify-between gap-3 text-xs">
+      
+      <!-- Amazon Logo & Prime Badge -->
+      <div class="flex items-center gap-4">
+        <a href="#" class="flex items-center gap-1 hover:outline hover:outline-1 hover:outline-white p-1 rounded transition-all">
+          <span class="font-black text-2xl tracking-tighter text-white">amazon<span class="text-[#f08804] text-lg">.es</span></span>
+          <span class="text-[10px] text-[#febd69] font-bold uppercase ml-1 bg-[#232f3e] px-1.5 py-0.5 rounded border border-[#3a4553]">Prime</span>
+        </a>
+
+        <!-- Location selector (Desktop) -->
+        <div class="hidden lg:flex items-center gap-1 hover:outline hover:outline-1 hover:outline-white p-1 rounded cursor-pointer text-[#cccccc]">
+          <i class="fa-solid fa-location-dot text-sm text-white"></i>
+          <div class="leading-tight text-[11px]">
+            <span class="block text-[#a0a0a0]">Enviar a España</span>
+            <span class="font-bold text-white">Madrid 28001</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live Search Bar inside Dr. Squatch Store -->
+      <div class="flex-1 max-w-2xl mx-2 flex items-center">
+        <div class="bg-[#e6e6e6] text-[#555] px-3 py-2 rounded-l text-xs font-semibold border-r border-[#ccc] hidden sm:block">
+          Tienda Dr. Squatch
+        </div>
+        <div class="relative w-full">
+          <input 
+            type="text" 
+            id="storeSearchInput"
+            placeholder="Buscar en la tienda Dr. Squatch (ej. Pine Tar, Aloe, Desodorante)..." 
+            class="w-full py-2 px-3 text-sm text-[#111111] bg-white focus:outline-none focus:ring-2 focus:ring-[#f08804]"
+            oninput="handleLiveSearch(this.value)"
+          />
+          <button 
+            id="clearSearchBtn"
+            onclick="clearSearch()"
+            class="hidden absolute right-2 top-2 text-[#888] hover:text-[#111] text-xs font-bold px-1"
+          >
+            ✕
+          </button>
+        </div>
+        <button class="bg-[#febd69] hover:bg-[#f3a847] text-[#111111] px-4 py-2 rounded-r font-bold text-sm transition-colors">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </div>
+
+      <!-- User Account, Orders & Cart Drawer Trigger -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <div class="hidden md:block hover:outline hover:outline-1 hover:outline-white p-1 rounded cursor-pointer leading-tight text-right">
+          <span class="text-[11px] text-[#ccc] block">Hola, Miembro Prime</span>
+          <span class="font-bold text-white text-xs">Cuenta y Listas ▾</span>
+        </div>
+
+        <button 
+          onclick="toggleCartModal()"
+          class="flex items-center gap-1.5 bg-[#232f3e] hover:bg-[#2e3e50] border border-[#3b4b5e] px-3 py-1.5 rounded cursor-pointer transition-all hover:scale-105"
+        >
+          <div class="relative">
+            <i class="fa-solid fa-cart-shopping text-lg text-white"></i>
+            <span id="cartBadgeCount" class="absolute -top-2 -right-2 bg-[#f08804] text-[#111] text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+              1
+            </span>
+          </div>
+          <span class="font-bold text-[#febd69] text-xs hidden sm:inline">Cesta</span>
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Secondary Category Subnav -->
+    <div class="bg-[#232f3e] text-xs text-white px-3 sm:px-6 py-1.5 flex items-center justify-between border-t border-[#37475a] overflow-x-auto">
+      <div class="flex items-center gap-5 whitespace-nowrap">
+        <span class="font-bold cursor-pointer hover:text-[#febd69]"><i class="fa-solid fa-bars mr-1"></i> Todo</span>
+        <span class="text-[#febd69] font-bold border-b border-[#febd69] cursor-pointer">
+          <i class="fa-solid fa-store mr-1 text-[#febd69]"></i> Tienda Oficial de Marca: Dr. Squatch
+        </span>
+        <span class="hover:text-[#febd69] cursor-pointer">Ofertas del Día</span>
+        <span class="hover:text-[#febd69] cursor-pointer">Cuidado Personal Masculino</span>
+        <span class="hover:text-[#febd69] cursor-pointer">Envío Prime 1 Día</span>
+      </div>
+      <div class="hidden lg:flex items-center gap-2 text-[#febd69] text-[11px] font-bold">
+        <span>⭐ Vendedor Oficial Autorizado en Amazon España</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========================================================================= -->
+  <!-- 2. AMAZON STOREFRONT BRAND BAR & STORE HEADER -->
+  <!-- ========================================================================= -->
+  <section class="bg-white border-b border-[#d5d9d9] shadow-sm">
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
+      
+      <!-- Store Identity: 400x400 Logo + Name + Verified Badge + Followers -->
+      <div class="flex items-center gap-3 sm:gap-4">
+        <!-- 400 x 400 Logo Container with Official Specs -->
+        <div class="relative group">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-lg bg-[#FFFFFF] border-2 border-[#d97706] p-1 shadow-md flex items-center justify-center overflow-hidden">
+            <img 
+              src="assets/logo-drsquatch.png" 
+              alt="Logo Dr. Squatch" 
+              class="w-full h-full object-cover rounded"
+            />
+          </div>
+          
+        </div>
+
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-xl font-extrabold text-[#0f1111] uppercase tracking-wide flex items-center gap-1.5">
+              <span>Dr. Squatch</span>
+              <i class="fa-solid fa-circle-check text-[#007185] text-sm" title="Marca Registrada Verificada en Amazon Brand Registry"></i>
+            </h1>
+            <span class="bg-[#183124] text-[#febd69] text-[10px] font-mono-code font-bold px-2 py-0.5 rounded uppercase">
+              TIENDA OFICIAL
+            </span>
+          </div>
+          <p class="text-xs text-[#565959] mt-0.5">
+            Cuidado Personal Masculino 100% de Origen Natural • <span class="text-[#007185] font-semibold">142.850 seguidores</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Action Buttons: Follow Store / Share / Dimensions Guide -->
+      <div class="flex items-center gap-2">
+        <button 
+          id="followStoreBtn"
+          onclick="toggleFollowStore()"
+          class="bg-[#183124] hover:bg-[#244b37] text-white border border-[#2d5a43] text-xs font-bold uppercase px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm"
+        >
+          <i id="followIcon" class="fa-solid fa-plus text-[#febd69]"></i>
+          <span id="followText">Seguir Tienda</span>
+        </button>
+
+        <button 
+          onclick="shareStore()"
+          class="bg-[#f0f2f2] hover:bg-[#e3e6e6] text-[#0f1111] border border-[#d5d9d9] text-xs font-bold px-3 py-1.5 rounded-full transition-colors flex items-center gap-1.5"
+          title="Compartir enlace de Amazon Storefront"
+        >
+          <i class="fa-solid fa-share-nodes text-[#555]"></i>
+          <span class="hidden sm:inline">Compartir</span>
+        </button>
+
+        <!-- Blueprint Guide Toggle -->
+       
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- 3. STORE CATEGORY NAVIGATION TABS (AMAZON STOREFRONT TABS) -->
+    <!-- ========================================================================= -->
+    <div class="bg-[#181d1a] border-t border-[#2a362e]">
+      <div class="max-w-[1500px] mx-auto px-2 sm:px-6">
+        <nav class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1 scrollbar-none text-xs font-bold uppercase tracking-wider" id="categoriesNav">
+          
+            <button 
+              onclick="filterByCategory('all')" 
+              id="cat-tab-all"
+              class="cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 bg-[#d97706] text-[#0e1713] font-black shadow-md"
+            >
+              <span>Inicio y Destacados</span>
+              <span class="text-[10px] opacity-75 font-mono">(12)</span>
+            </button>
+          
+            <button 
+              onclick="filterByCategory('jabones')" 
+              id="cat-tab-jabones"
+              class="cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 text-[#d4ded7] hover:text-white hover:bg-[#253229]"
+            >
+              <span>Jabones en Barra</span>
+              <span class="text-[10px] opacity-75 font-mono">(5)</span>
+            </button>
+          
+            <button 
+              onclick="filterByCategory('cabello')" 
+              id="cat-tab-cabello"
+              class="cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 text-[#d4ded7] hover:text-white hover:bg-[#253229]"
+            >
+              <span>Cuidado del Cabello</span>
+              <span class="text-[10px] opacity-75 font-mono">(3)</span>
+            </button>
+          
+            <button 
+              onclick="filterByCategory('desodorantes')" 
+              id="cat-tab-desodorantes"
+              class="cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 text-[#d4ded7] hover:text-white hover:bg-[#253229]"
+            >
+              <span>Desodorantes Naturales</span>
+              <span class="text-[10px] opacity-75 font-mono">(3)</span>
+            </button>
+          
+            <button 
+              onclick="filterByCategory('packs')" 
+              id="cat-tab-packs"
+              class="cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 text-[#d4ded7] hover:text-white hover:bg-[#253229]"
+            >
+              <span>Packs y Sets de Ahorro</span>
+              <span class="text-[10px] opacity-75 font-mono">(3)</span>
+            </button>
+          
+            <button 
+              onclick="filterByCategory('bestsellers')" 
+              id="cat-tab-bestsellers"
+              class="cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 text-[#d4ded7] hover:text-white hover:bg-[#253229]"
+            >
+              <span>Más Vendidos (Top 10)</span>
+              <span class="text-[10px] opacity-75 font-mono">(6)</span>
+            </button>
+          
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 4. HERO HEADER BANNER (3000 x 600 PX ESCRITORIO / 750 x 750 PX MÓVIL) -->
+  <!-- ========================================================================= -->
+  <section class="max-w-[1500px] mx-auto w-full px-2 sm:px-4 pt-3">
+    
+    <!-- Desktop Hero: 3000 x 600 px (5:1) with Central Safe Zone -->
+    <div class="relative w-full rounded-lg overflow-hidden border-2 border-[#d97706] bg-[#0c1410] shadow-xl group">
+      
+      <!-- Official Dimension Badges -->
+      <div class="absolute top-3 left-3 z-30 flex flex-wrap gap-2">
+        
+        
+      </div>
+
+      <!-- Background High-Res Banner -->
+      <div class="relative h-[320px] sm:h-[380px] md:h-[440px] lg:h-[480px] w-full overflow-hidden flex items-center">
+        <img 
+          src="https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=3000&h=600&q=90" 
+          alt="Dr. Squatch Bosque y Jabón" 
+          class="absolute inset-0 w-full h-full object-cover object-center opacity-40 filter contrast-125 group-hover:scale-105 transition-transform duration-700"
+        />
+        <!-- Vignette & Forest Gradients -->
+        <div class="absolute inset-0 bg-gradient-to-r from-[#0a150f] via-[#0f281c]/80 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0a150f] via-transparent to-transparent"></div>
+
+        <!-- Safe Zone Visual Guide Overlay (Optional toggle preview) -->
+        <div class="absolute inset-y-4 inset-x-8 md:inset-x-24 border border-dashed border-[#d97706]/30 pointer-events-none rounded hidden lg:flex items-start justify-end p-2">
+          <span class="text-[9px] font-mono-code text-[#d97706]/70 uppercase">Zona Segura Central (Safe Zone)</span>
+        </div>
+
+        <!-- Hero Content in the Safe Zone -->
+        <div class="relative z-20 max-w-2xl px-6 sm:px-12 py-8 text-white space-y-3 sm:space-y-4">
+          <div class="inline-flex items-center gap-2 bg-[#d97706] text-[#0e1713] font-mono-code text-[11px] font-extrabold uppercase px-3 py-1 rounded shadow">
+            <i class="fa-solid fa-tree"></i>
+            <span>TIENDA OFICIAL DE LA MARCA EN AMAZON</span>
+          </div>
+
+          <h2 class="text-2xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-white uppercase leading-none drop-shadow-lg">
+            SIÉNTETE COMO UN HOMBRE. HUELE COMO UN CAMPEÓN.
+          </h2>
+
+          <p class="text-xs sm:text-base text-[#e0e8e3] max-w-xl leading-relaxed">
+            Jabones artesanales saponificados en frío, desodorantes sin aluminio y cuidado capilar botánico.
+          </p>
+
+          <!-- CTAs -->
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button 
+              onclick="filterByCategory('jabones')"
+              class="bg-[#d97706] hover:bg-[#ea580c] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider px-5 py-2.5 rounded shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
+            >
+              <span>Explorar Jabones Más Vendidos</span>
+              <i class="fa-solid fa-arrow-right"></i>
+            </button>
+
+            <button 
+              onclick="filterByCategory('packs')"
+              class="bg-[#183124]/90 hover:bg-[#254d38] text-[#febd69] border border-[#d97706]/60 font-bold text-xs sm:text-sm uppercase tracking-wider px-4 py-2.5 rounded shadow transition-all"
+            >
+              <span>Ver Packs de Ahorro</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 5. TRUST PILLARS & BRAND VALUE PROPOSITION (4 TILES) -->
+  <!-- ========================================================================= -->
+  <section class="max-w-[1500px] mx-auto w-full px-2 sm:px-4 py-4">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-4 text-xs">
+      
+        <div class="bg-white p-3.5 rounded-lg border border-[#d5d9d9] shadow-sm flex items-start gap-3 hover:border-[#d97706] transition-colors">
+          <div class="w-8 h-8 rounded bg-[#183124] text-[#febd69] flex items-center justify-center flex-shrink-0 font-bold text-sm">
+            <i class="fa-solid fa-leaf"></i>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-[#0f1111] uppercase text-[11px] sm:text-xs tracking-tight">100% ORIGEN NATURAL</h4>
+            <p class="text-[10px] sm:text-[11px] text-[#565959] leading-tight mt-0.5">Sin sulfatos SLS, parabenos ni derivados petroquímicos.</p>
+          </div>
+        </div>
+      
+        <div class="bg-white p-3.5 rounded-lg border border-[#d5d9d9] shadow-sm flex items-start gap-3 hover:border-[#d97706] transition-colors">
+          <div class="w-8 h-8 rounded bg-[#183124] text-[#febd69] flex items-center justify-center flex-shrink-0 font-bold text-sm">
+            <i class="fa-solid fa-snowflake"></i>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-[#0f1111] uppercase text-[11px] sm:text-xs tracking-tight">SAPONIFICACIÓN EN FRÍO</h4>
+            <p class="text-[10px] sm:text-[11px] text-[#565959] leading-tight mt-0.5">Conserva íntegra la glicerina hidratante natural de los aceites.</p>
+          </div>
+        </div>
+      
+        <div class="bg-white p-3.5 rounded-lg border border-[#d5d9d9] shadow-sm flex items-start gap-3 hover:border-[#d97706] transition-colors">
+          <div class="w-8 h-8 rounded bg-[#183124] text-[#febd69] flex items-center justify-center flex-shrink-0 font-bold text-sm">
+            <i class="fa-solid fa-truck-fast"></i>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-[#0f1111] uppercase text-[11px] sm:text-xs tracking-tight">ENVÍO RÁPIDO PRIME</h4>
+            <p class="text-[10px] sm:text-[11px] text-[#565959] leading-tight mt-0.5">Entrega gratuita al día siguiente en millones de códigos postales.</p>
+          </div>
+        </div>
+      
+        <div class="bg-white p-3.5 rounded-lg border border-[#d5d9d9] shadow-sm flex items-start gap-3 hover:border-[#d97706] transition-colors">
+          <div class="w-8 h-8 rounded bg-[#183124] text-[#febd69] flex items-center justify-center flex-shrink-0 font-bold text-sm">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h4 class="font-extrabold text-[#0f1111] uppercase text-[11px] sm:text-xs tracking-tight">GARANTÍA SQUATCH</h4>
+            <p class="text-[10px] sm:text-[11px] text-[#565959] leading-tight mt-0.5">30 días de satisfacción total o te devolvemos el dinero.</p>
+          </div>
+        </div>
+      
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 6. CATEGORY BANNERS / LARGE TILES (PROPORCIÓN 5:2 - 3000 x 1200 PX) -->
+  <!-- ========================================================================= -->
+  <section id="categoryTilesSection" class="max-w-[1500px] mx-auto w-full px-2 sm:px-4 py-2 space-y-6">
+    
+    <div class="flex items-center justify-between border-b-2 border-[#d97706] pb-2">
+      <div>
+        <h3 class="text-lg sm:text-2xl font-black text-[#0f1111] uppercase tracking-tight flex items-center gap-2">
+          <span>Colecciones</span>
+          
+        </h3>
+        
+      </div>
+      
+    </div>
+
+    <!-- The 3 Large 5:2 Category Tiles -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
+      
+        <div 
+          onclick="filterByCategory('jabones')"
+          class="relative rounded-lg overflow-hidden bg-[#0c1410] border border-[#d5d9d9] shadow-md hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between"
+        >
+          <!-- Dimension Badge Top Right -->
+          
+
+          <!-- Banner Image (Aspect Ratio 5:2) -->
+          <div class="relative w-full aspect-[5/2] overflow-hidden bg-[#183124]">
+            <img 
+              src="assets/0101a.jpg" 
+              alt="JABONES EN BARRA EN FRÍO" 
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-75 filter contrast-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0c1410] via-transparent to-transparent"></div>
+          </div>
+
+          <!-- Content Body -->
+          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-[#0f1813] text-white">
+            <div>
+              <span class="text-[10px] font-mono-code font-bold uppercase tracking-wider text-[#febd69] block">
+                EXFOLIACIÓN BOTÁNICA & GLICERINA PURA
+              </span>
+              <h4 class="text-lg font-black uppercase text-white mt-1 group-hover:text-[#febd69] transition-colors leading-tight">
+                JABONES EN BARRA EN FRÍO
+              </h4>
+              <p class="text-xs text-[#b8c7be] mt-2 leading-relaxed line-clamp-2">
+                Elaborados artesanalmente en pequeños lotes con aceites vegetales nutritivos y granos de exfoliación real como avena coloidal, arena volcánica y café molido.
+              </p>
+            </div>
+
+            <!-- Bullet Highlights -->
+            <ul class="space-y-1 text-[11px] text-[#e0e8e3] pt-2 border-t border-[#202f25]">
+              
+                <li class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check text-[#d97706] text-[10px]"></i>
+                  <span>Proceso de curado en frío de 30 días</span>
+                </li>
+              
+                <li class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check text-[#d97706] text-[10px]"></i>
+                  <span>Retención del 100% de glicerina natural</span>
+                </li>
+              
+            </ul>
+
+            <!-- CTA Button inside tile -->
+            <div class="pt-2">
+              <div class="w-full bg-[#183124] group-hover:bg-[#d97706] text-white group-hover:text-[#0e1713] py-2 px-3 rounded font-extrabold text-xs uppercase tracking-wider flex items-center justify-between transition-colors shadow">
+                <span>Ver Colección de Jabones</span>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div 
+          onclick="filterByCategory('cabello')"
+          class="relative rounded-lg overflow-hidden bg-[#0c1410] border border-[#d5d9d9] shadow-md hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between"
+        >
+          <!-- Dimension Badge Top Right -->
+          
+
+          <!-- Banner Image (Aspect Ratio 5:2) -->
+          <div class="relative w-full aspect-[5/2] overflow-hidden bg-[#183124]">
+            <img 
+              src="assets/0103a.jpg" 
+              alt="CUIDADO DEL CABELLO MASCULINO" 
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-75 filter contrast-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0c1410] via-transparent to-transparent"></div>
+          </div>
+
+          <!-- Content Body -->
+          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-[#0f1813] text-white">
+            <div>
+              <span class="text-[10px] font-mono-code font-bold uppercase tracking-wider text-[#febd69] block">
+                CHAMPÚS & ACONDICIONADORES CON BIOTINA Y CORTEZA DE SAUCE
+              </span>
+              <h4 class="text-lg font-black uppercase text-white mt-1 group-hover:text-[#febd69] transition-colors leading-tight">
+                CUIDADO DEL CABELLO MASCULINO
+              </h4>
+              <p class="text-xs text-[#b8c7be] mt-2 leading-relaxed line-clamp-2">
+                Fortalece la raíz capilar y equilibra el sebo del cuero cabelludo sin siliconas que asfixien tus folículos ni sulfatos que resequen tu pelo.
+              </p>
+            </div>
+
+            <!-- Bullet Highlights -->
+            <ul class="space-y-1 text-[11px] text-[#e0e8e3] pt-2 border-t border-[#202f25]">
+              
+                <li class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check text-[#d97706] text-[10px]"></i>
+                  <span>Extracto de corteza de sauce y menta fresca</span>
+                </li>
+              
+                <li class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check text-[#d97706] text-[10px]"></i>
+                  <span>Cero sulfatos SLS/SLES y sin siliconas</span>
+                </li>
+              
+            </ul>
+
+            <!-- CTA Button inside tile -->
+            <div class="pt-2">
+              <div class="w-full bg-[#183124] group-hover:bg-[#d97706] text-white group-hover:text-[#0e1713] py-2 px-3 rounded font-extrabold text-xs uppercase tracking-wider flex items-center justify-between transition-colors shadow">
+                <span>Descubrir Cuidado Capilar</span>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div 
+          onclick="filterByCategory('desodorantes')"
+          class="relative rounded-lg overflow-hidden bg-[#0c1410] border border-[#d5d9d9] shadow-md hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between"
+        >
+          <!-- Dimension Badge Top Right -->
+          
+
+          <!-- Banner Image (Aspect Ratio 5:2) -->
+          <div class="relative w-full aspect-[5/2] overflow-hidden bg-[#183124]">
+            <img 
+              src="assets/0102a.jpg" 
+              alt="DESODORANTES NATURALES" 
+              class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500 opacity-75 filter contrast-110"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0c1410] via-transparent to-transparent"></div>
+          </div>
+
+          <!-- Content Body -->
+          <div class="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3 bg-[#0f1813] text-white">
+            <div>
+              <span class="text-[10px] font-mono-code font-bold uppercase tracking-wider text-[#febd69] block">
+                PROTECCIÓN 48 HORAS SIN ALUMINIO
+              </span>
+              <h4 class="text-lg font-black uppercase text-white mt-1 group-hover:text-[#febd69] transition-colors leading-tight">
+                DESODORANTES NATURALES
+              </h4>
+              <p class="text-xs text-[#b8c7be] mt-2 leading-relaxed line-clamp-2">
+                Bloquea el mal olor con polvo de arrurruz, carbón activado y probióticos naturales que respetan la transpiración natural sin manchar tu ropa.
+              </p>
+            </div>
+
+            <!-- Bullet Highlights -->
+            <ul class="space-y-1 text-[11px] text-[#e0e8e3] pt-2 border-t border-[#202f25]">
+              
+                <li class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check text-[#d97706] text-[10px]"></i>
+                  <span>0% Clorhidrato de Aluminio</span>
+                </li>
+              
+                <li class="flex items-center gap-1.5">
+                  <i class="fa-solid fa-circle-check text-[#d97706] text-[10px]"></i>
+                  <span>Absorción natural con fécula de tapioca</span>
+                </li>
+              
+            </ul>
+
+            <!-- CTA Button inside tile -->
+            <div class="pt-2">
+              <div class="w-full bg-[#183124] group-hover:bg-[#d97706] text-white group-hover:text-[#0e1713] py-2 px-3 rounded font-extrabold text-xs uppercase tracking-wider flex items-center justify-between transition-colors shadow">
+                <span>Ver Gama de Desodorantes</span>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+    </div>
+
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- 7. MAIN PRODUCT GRID (1000 x 1000 PX PRODUCT CARDS WITH LIVE FILTERS) -->
+  <!-- ========================================================================= -->
+  <main class="max-w-[1500px] mx-auto w-full px-2 sm:px-4 py-6 flex-1">
+    
+    <!-- Products Section Header & Active Filter Info -->
+    <div class="bg-white p-4 rounded-lg border border-[#d5d9d9] shadow-sm mb-6 flex flex-wrap items-center justify-between gap-4">
+      <div>
+        <div class="flex items-center gap-2">
+          <h3 id="currentCategoryHeading" class="text-xl sm:text-2xl font-black text-[#0f1111] uppercase tracking-tight">
+            Catálogo Completo • Jabones, Cabello y Desodorantes
+          </h3>
+          <span id="productCountBadge" class="bg-[#183124] text-[#febd69] font-mono-code text-xs px-2.5 py-0.5 rounded font-bold">
+            14 productos
+          </span>
+        </div>
+        
+      </div>
+
+      <!-- Quick Sort & Reset Filters -->
+      <div class="flex items-center gap-2">
+        <label for="sortSelect" class="text-xs font-bold text-[#565959]">Ordenar por:</label>
+        <select 
+          id="sortSelect" 
+          onchange="handleSortChange(this.value)"
+          class="bg-[#f0f2f2] border border-[#d5d9d9] text-xs font-semibold rounded p-1.5 text-[#0f1111] focus:outline-none"
+        >
+          <option value="featured">Destacados de Amazon</option>
+          <option value="price_asc">Precio: de menor a mayor</option>
+          <option value="price_desc">Precio: de mayor a menor</option>
+          <option value="rating">Valoración media de clientes</option>
+          <option value="reviews">Número de opiniones</option>
+        </select>
+        
+        <button 
+          onclick="filterByCategory('all')"
+          class="text-xs text-[#007185] hover:underline font-bold ml-2"
+        >
+          Ver Todos
+        </button>
+      </div>
+    </div>
+
+    <!-- Product Grid Container (Populated dynamically via JS) -->
+    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4 sm:gap-6">
+      <!-- Injected via JavaScript renderProducts() -->
+    </div>
+
+    <!-- Empty search / filter state message (hidden by default) -->
+    <div id="noProductsFound" class="hidden bg-white p-12 rounded-lg border border-[#d5d9d9] text-center space-y-3">
+      <i class="fa-solid fa-box-open text-4xl text-[#888]"></i>
+      <h4 class="text-lg font-bold text-[#111]">No se encontraron productos con ese criterio</h4>
+      <p class="text-xs text-[#555]">Prueba a buscar con otro término o selecciona "Inicio y Destacados".</p>
+      <button 
+        onclick="clearSearch(); filterByCategory('all');"
+        class="bg-[#febd69] hover:bg-[#f3a847] text-[#111] font-bold text-xs px-4 py-2 rounded uppercase"
+      >
+        Restablecer Catálogo
+      </button>
+    </div>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- 8. QUICK VIEW MODAL FOR 1000 x 1000 PX PRODUCT INSPECTION -->
+  <!-- ========================================================================= -->
+  <div id="quickViewModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-white rounded-lg max-w-3xl w-full border-2 border-[#d97706] shadow-2xl overflow-hidden animate-fadeIn relative">
+      
+      <!-- Close button -->
+      <button 
+        onclick="closeQuickView()"
+        class="absolute top-3 right-3 z-20 bg-[#131921] hover:bg-[#ea580c] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold transition-colors"
+      >
+        ✕
+      </button>
+
+      <div id="quickViewContent" class="grid grid-cols-1 md:grid-cols-12 p-6 gap-6">
+        <!-- Injected via JS openQuickView(productId) -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 9. OFFICIAL DIMENSIONS & SPECS BLUEPRINT MODAL -->
+  <!-- ========================================================================= -->
+  <div id="specsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#111814] text-white rounded-lg max-w-4xl w-full border-2 border-[#d97706] shadow-2xl overflow-hidden p-6 space-y-5 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between border-b border-[#2d3a31] pb-3">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-ruler-combined text-[#febd69] text-xl"></i>
+          <div>
+            <h3 class="text-lg font-black uppercase text-white">Guía Oficial de Proporciones y Medidas Amazon Storefront</h3>
+            <p class="text-xs text-[#a0b0a5]">Directrices de Amazon Brand Registry & Seller Central para la tienda Dr. Squatch.</p>
+          </div>
+        </div>
+        <button onclick="toggleSpecsModal()" class="text-white hover:text-[#ea580c] text-xl font-bold">✕</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        
+        <!-- Spec 1: Hero Desktop -->
+        <div class="bg-[#18231c] p-4 rounded border border-[#2d3a31] space-y-1.5">
+          <span class="text-[#febd69] font-mono-code font-bold uppercase">1. Cabecera Hero Escritorio</span>
+          <h4 class="text-sm font-black text-white">3000 x 600 px (Proporción 5:1)</h4>
+          <p class="text-[#ccc] text-[11px]">Zona segura central: 1800 x 480 px. Se debe mantener el logotipo y eslogan en el área protegida para evitar cortes en pantallas panorámicas o tablets.</p>
+        </div>
+
+        <!-- Spec 2: Hero Mobile -->
+        <div class="bg-[#18231c] p-4 rounded border border-[#2d3a31] space-y-1.5">
+          <span class="text-[#febd69] font-mono-code font-bold uppercase">2. Cabecera Hero Móvil</span>
+          <h4 class="text-sm font-black text-white">750 x 750 px (Proporción 1:1 Cuadrada)</h4>
+          <p class="text-[#ccc] text-[11px]">Optimizada para la aplicación de Amazon en iOS y Android, permitiendo una lectura inmediata del eslogan en pantallas táctiles.</p>
+        </div>
+
+        <!-- Spec 3: Logo de Tienda -->
+        <div class="bg-[#18231c] p-4 rounded border border-[#2d3a31] space-y-1.5">
+          <span class="text-[#febd69] font-mono-code font-bold uppercase">3. Logotipo de la Store</span>
+          <h4 class="text-sm font-black text-white">400 x 400 px (Proporción 1:1)</h4>
+          <p class="text-[#ccc] text-[11px]">Formato PNG o JPG cuadrado con contraste optimizado sobre fondo claro y oscuro.</p>
+        </div>
+
+        <!-- Spec 4: Mosaicos 5:2 -->
+        <div class="bg-[#18231c] p-4 rounded border border-[#2d3a31] space-y-1.5">
+          <span class="text-[#febd69] font-mono-code font-bold uppercase">4. Banners de Categoría / Mosaicos</span>
+          <h4 class="text-sm font-black text-white">3000 x 1200 px (Proporción 5:2)</h4>
+          <p class="text-[#ccc] text-[11px]">Utilizados para "Jabones en Barra", "Cuidado del Cabello" y "Desodorantes Naturales", con llamadas a la acción directas.</p>
+        </div>
+
+        <!-- Spec 5: Cuadrícula de Producto -->
+        <div class="bg-[#18231c] p-4 rounded border border-[#2d3a31] space-y-1.5 md:col-span-2">
+          <span class="text-[#febd69] font-mono-code font-bold uppercase">5. Tarjetas de Cuadrícula de Productos</span>
+          <h4 class="text-sm font-black text-white">1000 x 1000 px (Fondo Blanco Limpio / Transparente)</h4>
+          <p class="text-[#ccc] text-[11px]">Permite el zoom en alta resolución para inspección de ingredientes, textura de exfoliación (grit) y sellos botánicos.</p>
+        </div>
+
+      </div>
+
+      <div class="text-right pt-2">
+        <button onclick="toggleSpecsModal()" class="bg-[#d97706] hover:bg-[#ea580c] text-white px-5 py-2 rounded text-xs font-bold uppercase">
+          Entendido, Cerrar Guía
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 10. CART DRAWER MODAL -->
+  <!-- ========================================================================= -->
+  <div id="cartModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-end">
+    <div class="bg-white w-full max-w-md h-full shadow-2xl flex flex-col justify-between p-6 animate-slideInRight">
+      <div>
+        <div class="flex items-center justify-between border-b border-[#e7e7e7] pb-4 mb-4">
+          <h3 class="text-lg font-bold text-[#0f1111] flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping text-[#f08804]"></i>
+            <span>Cesta de Amazon (<span id="drawerCartCount">1</span>)</span>
+          </h3>
+          <button onclick="toggleCartModal()" class="text-[#555] hover:text-[#111] text-lg font-bold">✕</button>
+        </div>
+
+        <div id="cartItemsList" class="space-y-3 overflow-y-auto max-h-[60vh]">
+          <!-- Cart Items Injected Dynamically -->
+        </div>
+      </div>
+
+      <!-- Cart Subtotal & Checkout -->
+      <div class="border-t border-[#e7e7e7] pt-4 space-y-3">
+        <div class="flex justify-between items-baseline text-sm">
+          <span class="text-[#555]">Subtotal estimado:</span>
+          <span id="cartSubtotal" class="text-xl font-extrabold text-[#b12704]">9,99 €</span>
+        </div>
+        <p class="text-[11px] text-[#007600] font-bold">✓ Califica para Envío GRATIS con Amazon Prime</p>
+
+        <button 
+          onclick="alert('¡Redirigiendo a la pasarela de pago segura de Amazon!');"
+          class="w-full bg-[#ffd814] hover:bg-[#f7ca00] text-[#0f1111] py-2.5 rounded-full font-bold text-xs uppercase shadow-sm transition-colors"
+        >
+          Tramitar Pedido
+        </button>
+
+        <button 
+          onclick="toggleCartModal()"
+          class="w-full bg-[#f0f2f2] hover:bg-[#e3e6e6] text-[#0f1111] py-2 rounded-full font-bold text-xs uppercase border border-[#d5d9d9]"
+        >
+          Continuar Comprando
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification for Add to Cart -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-[#183124] border-2 border-[#d97706] text-white px-5 py-3 rounded-lg shadow-2xl flex items-center gap-3 hidden transform translate-y-10 transition-transform duration-300">
+    <i class="fa-solid fa-circle-check text-[#febd69] text-lg"></i>
+    <div>
+      <h5 class="text-xs font-bold" id="toastTitle">¡Producto añadido!</h5>
+      <p class="text-[11px] text-[#d4ded7]" id="toastDesc">Se ha agregado a tu cesta de Amazon.</p>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- 11. AMAZON STOREFRONT FOOTER -->
+  <!-- ========================================================================= -->
+  <footer class="bg-[#131921] text-white border-t-2 border-[#d97706] mt-12 text-xs">
+    
+    <!-- Back to top button -->
+    <a href="#" class="block bg-[#232f3e] hover:bg-[#2d3d50] text-center py-3 text-xs font-bold text-[#ccc] hover:text-white transition-colors">
+      Inicio de página ▲
+    </a>
+
+    <div class="max-w-[1500px] mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-[#ccc]">
+      <div>
+        <div class="flex items-center gap-2 text-white font-extrabold text-sm mb-2">
+          <i class="fa-solid fa-tree text-[#d97706]"></i>
+          <span>Dr. Squatch Official Store</span>
+        </div>
+        <p class="text-[11px] leading-relaxed">
+          Tienda oficial de la marca Dr. Squatch en Amazon. Cuidado personal masculino natural para hombres que no se conforman con químicos industriales.
+        </p>
+      </div>
+
+      <div>
+        <h5 class="text-white font-bold mb-2">Colecciones Principales</h5>
+        <ul class="space-y-1 text-[11px]">
+          <li><a href="javascript:void(0)" onclick="filterByCategory('jabones')" class="hover:underline">Jabones en Barra en Frío</a></li>
+          <li><a href="javascript:void(0)" onclick="filterByCategory('cabello')" class="hover:underline">Champús y Acondicionadores</a></li>
+          <li><a href="javascript:void(0)" onclick="filterByCategory('desodorantes')" class="hover:underline">Desodorantes sin Aluminio</a></li>
+          <li><a href="javascript:void(0)" onclick="filterByCategory('packs')" class="hover:underline">Packs de Ahorro y Regalo</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="text-white font-bold mb-2">Garantías de Compra en Amazon</h5>
+        <ul class="space-y-1 text-[11px]">
+          <li><i class="fa-solid fa-truck text-[#febd69] mr-1"></i> Envío rápido con Amazon Prime</li>
+          <li><i class="fa-solid fa-shield-halved text-[#febd69] mr-1"></i> Garantía de la A a la Z</li>
+          <li><i class="fa-solid fa-rotate-left text-[#febd69] mr-1"></i> Devolución gratuita en 30 días</li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="text-white font-bold mb-2">Especificaciones de Diseño</h5>
+        <p class="text-[11px]">Prototipo interactivo diseñado para despliegue estático en <strong>GitHub Pages</strong> con Tailwind CSS y JavaScript autónomo.</p>
+        <button 
+          onclick="toggleSpecsModal()"
+          class="mt-2 text-[#febd69] hover:underline font-bold text-[11px] block"
+        >
+          Consultar Guía de Medidas Oficiales ➔
+        </button>
+      </div>
+    </div>
+
+    <div class="border-t border-[#3a4553] py-4 text-center text-[#888] text-[11px]">
+      <p>© 2026 Dr. Squatch Amazon Storefront Simulator. Todos los derechos reservados. Módulos oficiales de Amazon Seller Central.</p>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- 12. EMBEDDED JAVASCRIPT FOR COMPLETE INTERACTIVITY & LOGIC -->
+  <!-- ========================================================================= -->
+  <script>
+    // Embedded Store Data
+    const ALL_PRODUCTS = [{"id":"prod-pine-tar","name":"Dr. Squatch Pine Tar Soap (Alquitrán de Pino)","category":"jabones","categoryLabel":"Jabón en Barra","tagline":"El jabón legendario que lo inició todo","description":"Extracto de pino silvestre, arena volcánica y avena para una exfoliación pesada que remueve la suciedad profunda dejando aroma a bosque virgen.","price":9.99,"originalPrice":12.99,"discountPercent":23,"rating":4.8,"reviewCount":48290,"imageUrl":"assets/0104p.jpg","badge":"Nº 1 Más Vendido","badgeColor":"#b12704","scentProfile":"Pino Robusto, Resina de Madera y Naranja Silvestre","gritLevel":"Grit Pesado","gritScore":5,"keyIngredients":["Alquitrán de Pino","Avena Coloidal","Arena Volcánica","Manteca de Karité"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-cool-fresh-aloe","name":"Dr. Squatch Cool Fresh Aloe (Aloe Vera)","category":"jabones","categoryLabel":"Jabón en Barra","tagline":"Frescura revitalizante para pieles sensibles","description":"Extracto puro de aloe vera con trébol blanco. Hidrata, calma y acondiciona la piel con una espuma refrescante de grit suave.","price":9.99,"originalPrice":12.99,"discountPercent":23,"rating":4.9,"reviewCount":32180,"imageUrl":"assets/0108p.jpg","badge":"Amazon's Choice","badgeColor":"#007185","scentProfile":"Hierbas Frescas, Manzanilla y Trébol Verde","gritLevel":"Grit Suave","gritScore":1,"keyIngredients":["Gel de Aloe Vera","Extracto de Trébol","Aceite de Oliva Extra"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-birchwood-breeze","name":"Dr. Squatch Birchwood Breeze (Brisa de Abedul)","category":"jabones","categoryLabel":"Jabón en Barra","tagline":"Exfoliación media con corteza de abedul","description":"Corteza de abedul finamente triturada para pulir la piel muerta mientras desata notas aromáticas crujientes a madera y aire de montaña.","price":9.99,"originalPrice":12.99,"discountPercent":23,"rating":4.7,"reviewCount":19840,"imageUrl":"assets/0105p.jpg","badge":"Fórmula Nueva","badgeColor":"#059669","scentProfile":"Madera de Abedul, Salvia Azul y Vetiver","gritLevel":"","gritScore":3,"keyIngredients":["Corteza de Abedul","Arcilla de Caolín","Aceite de Coco"],"inStock":true,"primeEligible":true,"isBestSeller":false},{"id":"prod-bay-rum","name":"Dr. Squatch Huerto junto al océano","category":"jabones","categoryLabel":"Jabón en Barra","tagline":"Notas especiadas isleñas y madera cálida","description":"Inspirado en la clásica receta marinera de las Antillas. Espuma densa y emoliente con toques de laurel, canela y piel de naranja.","price":9.99,"originalPrice":12.99,"discountPercent":23,"rating":4.8,"reviewCount":27400,"imageUrl":"assets/0109p.jpg","badge":"Edición Especial","badgeColor":"#ea580c","scentProfile":"Hoja de Laurel, Clavo Especiado, Pino y Vainilla","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Aceite Esencial de Laurel","Clavo en Polvo","Glicerina Pura"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-wood-barrel-bourbon","name":"Dr. Squatch Tango de mango","category":"jabones","categoryLabel":"Jabón en Barra","tagline":"Barra de textura ligera huele a mangos jugosos con notas de mango","description":"Extracto de grano de cebada cervecera y madera de roble con arena ultrafina para una ducha energizante digna de una destilería artesanal.","price":9.99,"originalPrice":12.99,"discountPercent":23,"rating":4.9,"reviewCount":38900,"imageUrl":"assets/0110p.jpg","badge":"Nº 1 Más Vendido","badgeColor":"#b12704","scentProfile":"Roble Ahumado, Malta y Azúcar Moreno","gritLevel":"Grit Medio","gritScore":3,"keyIngredients":["Extracto de Cebada","Arena de Río Pulida","Aceite de Ricino"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-hair-shampoo-cypress","name":"Dr. Squatch Náufrago de coco","category":"cabello","categoryLabel":"Champú Fortalecedor","tagline":"Dale volumen a tu cabello con el aroma tropical y dulce del coco tostado.","description":"Elimina el exceso de grasa y la caspa sin agredir la barrera lipídica del cuero cabelludo. Aroma fresco a ciprés costero.","price":14.99,"originalPrice":18.99,"discountPercent":21,"rating":4.8,"reviewCount":14620,"imageUrl":"assets/0111p.jpg","badge":"Amazon's Choice","badgeColor":"#007185","scentProfile":"Ciprés Salvaje, Ozono Marino y Cedro","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Corteza de Sauce Blanco","Aceite de Jojoba","Biotina Pura"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-hair-conditioner-cypress","name":"Alquitrán de pino","category":"cabello","categoryLabel":"Champú","tagline":"Desenredo suave y volumen natural sin siliconas","description":"Aceite de menta piperita y caléndula para nutrir las puntas secas y estimular la microcirculación capilar en cada lavado.","price":14.99,"originalPrice":18.99,"discountPercent":21,"rating":4.7,"reviewCount":11200,"imageUrl":"assets/0112p.jpg","badge":"Ahorro Prime","badgeColor":"#0284c7","scentProfile":"Menta Fresca, Ciprés y Sal Marina","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Menta Piperita","Aceite de Aguacate","Manteca de Karité"],"inStock":true,"primeEligible":true,"isBestSeller":false},{"id":"prod-hair-duo-set","name":"Dr. Squatch Cataratas frescas","category":"cabello","categoryLabel":"Champú","tagline":"El dúo botánico definitivo para cabello fuerte","description":"Pack de 2 botellas de 350ml con dosificador ergonómico. Fórmula 100% biodegradable diseñada para uso diario.","price":26.99,"originalPrice":35.98,"discountPercent":25,"rating":4.9,"reviewCount":18900,"imageUrl":"assets/f-producto-2 copia.jpg","badge":"Nº 1 Más Vendido","badgeColor":"#b12704","scentProfile":"Ciprés y Menta Marina Revitalizante","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Sauce Blanco","Aceite de Jojoba","Caléndula"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-deo-pine-tar","name":"Dr. Squatch Pine Tar Natural Deodorant","category":"desodorantes","categoryLabel":"Desodorante Natural","tagline":"48 horas de protección sin aluminio","description":"Carbón activado y polvo de arrurruz para neutralizar bacterias causantes del mal olor sin bloquear tus poros sudoríparos.","price":12.99,"originalPrice":15.99,"discountPercent":19,"rating":4.8,"reviewCount":24300,"imageUrl":"assets/0113p.jpg","badge":"Nº 1 Más Vendido","badgeColor":"#b12704","scentProfile":"Pino Silvestre, Naranja Dulce y Madera Quemada","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Carbón Activado","Polvo de Arrurruz","Manteca de Karité"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-deo-fresh-falls","name":"Dr. Squatch Fresh Falls Natural Deodorant","category":"desodorantes","categoryLabel":"Desodorante Natural","tagline":"Frescor glacial de cascada alpina","description":"Extracto de abedul de Alaska y musgo blanco para un frescor duradero que se activa con el movimiento de tu día a día.","price":12.99,"originalPrice":15.99,"discountPercent":19,"rating":4.9,"reviewCount":21900,"imageUrl":"assets/0106p.jpg","badge":"Amazon's Choice","badgeColor":"#007185","scentProfile":"Cascada de Montaña, Abedul y Cítricos Frescos","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Extracto de Abedul","Fécula de Maíz No-OMG","Aceite de Coco"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-deo-bourbon","name":"Dr. Squatch Wood Barrel Bourbon Deodorant","category":"desodorantes","categoryLabel":"Desodorante Natural","tagline":"Aroma ambarino y protección antibacteriana","description":"Manteca de cacao pura y magnesio natural para absorber la humedad axilar manteniendo la piel suave y sin irritación.","price":12.99,"originalPrice":15.99,"discountPercent":19,"rating":4.7,"reviewCount":16500,"imageUrl":"assets/0114p.jpg","badge":"Edición Especial","badgeColor":"#ea580c","scentProfile":"Roble Ahumado, Vainilla Cálida y Bourbon","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Magnesio Natural","Manteca de Cacao","Aceite de Jojoba"],"inStock":true,"primeEligible":true,"isBestSeller":false},{"id":"prod-pack-samurai-4pack","name":"Dr. Squatch Legendary 4-Pack Bundle (Pine Tar, Bourbon, Aloe, Birchwood)","category":"packs","categoryLabel":"Pack Ahorro 4 Barras","tagline":"Los 4 aromas icónicos de la marca en una caja de madera","description":"El kit de iniciación perfecto para transformar tu rutina diaria. Incluye 4 barras de 142g con diferentes niveles de exfoliación.","price":34.99,"originalPrice":47.96,"discountPercent":27,"rating":4.9,"reviewCount":52400,"imageUrl":"assets/0115p.jpg","badge":"Nº 1 Más Vendido","badgeColor":"#b12704","scentProfile":"Colección Completa de Aromas Legendarios","gritLevel":"Grit Medio","gritScore":3,"keyIngredients":["Alquitrán de Pino","Aloe Vera","Corteza de Abedul","Roble"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-pack-total-grooming","name":"Dr. Squatch Paquete de 4 desodorantes","category":"packs","categoryLabel":"Paquete personalizado","tagline":"Elige entre 4 desodorantes naturales.","description":"Todo lo que un hombre necesita en su baño en una presentación premium lista para regalar. Ahorro directo de más de 18€.","price":49.99,"originalPrice":68.96,"discountPercent":28,"rating":5,"reviewCount":18200,"imageUrl":"assets/0116p.jpg","badge":"Amazon's Choice","badgeColor":"#007185","scentProfile":"Aromas Naturales Coordinados","gritLevel":"Grit Pesado","gritScore":5,"keyIngredients":["Pine Tar Soap","Cypress Shampoo","Cypress Conditioner","Pine Tar Deodorant"],"inStock":true,"primeEligible":true,"isBestSeller":true},{"id":"prod-pack-soap-grippers","name":"Dr. Squatch Cala del Náufrago","category":"packs","categoryLabel":"Aceite y colonia para barba","tagline":"Una cautivadora mezcla con toques florales tropicales y especias exóticas.","description":"Jabonera artesanal de madera de cedro natural con drenaje vertical y esponja exfoliante de silicona médica.","price":16.99,"originalPrice":21.99,"discountPercent":23,"rating":4.8,"reviewCount":9750,"imageUrl":"assets/0117p.jpg","badge":"Ahorro Prime","badgeColor":"#0284c7","scentProfile":"Madera de Cedro Sin Tratar","gritLevel":"Sin Grit","gritScore":0,"keyIngredients":["Madera de Cedro FSC","Silicona Médica Antideslizante"],"inStock":true,"primeEligible":true,"isBestSeller":false}];
+    const ALL_CATEGORIES = [{"id":"all","name":"Inicio y Destacados","slug":"all","icon":"Sparkles","shortDesc":"Los productos favoritos de la comunidad Squatch","itemCount":12},{"id":"jabones","name":"Jabones en Barra","slug":"jabones","icon":"Soap","shortDesc":"Saponificados en frío con exfoliación natural (Grit)","itemCount":5},{"id":"cabello","name":"Cuidado del Cabello","slug":"cabello","icon":"Waves","shortDesc":"Champús y acondicionadores botánicos para cuero cabelludo","itemCount":3},{"id":"desodorantes","name":"Desodorantes Naturales","slug":"desodorantes","icon":"Shield","shortDesc":"Protección 48h sin aluminio ni parabenos","itemCount":3},{"id":"packs","name":"Packs y Sets de Ahorro","slug":"packs","icon":"Package","shortDesc":"Kits completos de aseo masculino con hasta 30% dto.","itemCount":3},{"id":"bestsellers","name":"Más Vendidos (Top 10)","slug":"bestsellers","icon":"Flame","shortDesc":"Fórmulas con más de 45.000 reseñas 5 estrellas","itemCount":6}];
+    const CATEGORY_TILES = [{"id":"tile-jabones","title":"JABONES EN BARRA EN FRÍO","subtitle":"EXFOLIACIÓN BOTÁNICA & GLICERINA PURA","description":"Elaborados artesanalmente en pequeños lotes con aceites vegetales nutritivos y granos de exfoliación real como avena coloidal, arena volcánica y café molido.","ctaText":"Ver Colección de Jabones","categorySlug":"jabones","dimensions":"3000 x 1200 px (5:2)","aspectRatio":"5:2","imageUrl":"https://images.unsplash.com/photo-1607006314644-88e285d36e2f?auto=format&fit=crop&w=3000&h=1200&q=90","badge":"MÓDULO MOSAICO 5:2 (3000x1200)","accentColor":"#d97706","highlights":["Proceso de curado en frío de 30 días","Retención del 100% de glicerina natural","4 niveles de Grit (Exfoliación)","Espuma densa de origen botánico"]},{"id":"tile-cabello","title":"CUIDADO DEL CABELLO MASCULINO","subtitle":"CHAMPÚS & ACONDICIONADORES CON BIOTINA Y CORTEZA DE SAUCE","description":"Fortalece la raíz capilar y equilibra el sebo del cuero cabelludo sin siliconas que asfixien tus folículos ni sulfatos que resequen tu pelo.","ctaText":"Descubrir Cuidado Capilar","categorySlug":"cabello","dimensions":"3000 x 1200 px (5:2)","aspectRatio":"5:2","imageUrl":"https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=3000&h=1200&q=90","badge":"MÓDULO MOSAICO 5:2 (3000x1200)","accentColor":"#10b981","highlights":["Extracto de corteza de sauce y menta fresca","Cero sulfatos SLS/SLES y sin siliconas","Nutrición profunda con aceite de jojoba","Aromas a ciprés y cítricos salvajes"]},{"id":"tile-desodorantes","title":"DESODORANTES NATURALES","subtitle":"PROTECCIÓN 48 HORAS SIN ALUMINIO","description":"Bloquea el mal olor con polvo de arrurruz, carbón activado y probióticos naturales que respetan la transpiración natural sin manchar tu ropa.","ctaText":"Ver Gama de Desodorantes","categorySlug":"desodorantes","dimensions":"3000 x 1200 px (5:2)","aspectRatio":"5:2","imageUrl":"https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=3000&h=1200&q=90","badge":"MÓDULO MOSAICO 5:2 (3000x1200)","accentColor":"#3b82f6","highlights":["0% Clorhidrato de Aluminio","Absorción natural con fécula de tapioca","Manteca de karité hidratante","Deslizamiento suave sin tirones"]}];
+
+    // State
+    let currentCategory = 'all';
+    let searchQuery = '';
+    let sortMethod = 'featured';
+    let cartItems = [
+      {
+        id: 'prod-pine-tar',
+        name: 'Dr. Squatch Pine Tar Soap (Alquitrán de Pino)',
+        price: 9.99,
+        quantity: 1,
+        imageUrl: 'https://images.unsplash.com/photo-1607006314644-88e285d36e2f?auto=format&fit=crop&w=300&h=300&q=90'
+      }
+    ];
+    let isFollowing = false;
+
+    // Initialize application on load
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts();
+      updateCartDisplay();
+    });
+
+    // Filter Products by Category
+    function filterByCategory(slug) {
+      currentCategory = slug;
+      searchQuery = '';
+      const searchInput = document.getElementById('storeSearchInput');
+      if (searchInput) searchInput.value = '';
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (clearBtn) clearBtn.classList.add('hidden');
+
+      // Update Navigation Tabs UI
+      const tabs = document.querySelectorAll('.cat-tab');
+      tabs.forEach(tab => {
+        tab.className = 'cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 text-[#d4ded7] hover:text-white hover:bg-[#253229]';
+      });
+      const activeTab = document.getElementById('cat-tab-' + slug);
+      if (activeTab) {
+        activeTab.className = 'cat-tab px-3.5 py-2 rounded transition-all whitespace-nowrap flex items-center gap-2 bg-[#d97706] text-[#0e1713] font-black shadow-md';
+      }
+
+      // Update Heading
+      const heading = document.getElementById('currentCategoryHeading');
+      const catObj = ALL_CATEGORIES.find(c => c.slug === slug);
+      if (heading && catObj) {
+        heading.innerText = catObj.name + ' • Catálogo Oficial Dr. Squatch';
+      }
+
+      // Scroll to product grid if clicked from a banner
+      if (slug !== 'all') {
+        const gridSection = document.getElementById('productsGrid');
+        if (gridSection) {
+          gridSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      renderProducts();
+    }
+
+    // Live Search
+    function handleLiveSearch(val) {
+      searchQuery = val.trim().toLowerCase();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (clearBtn) {
+        if (searchQuery.length > 0) clearBtn.classList.remove('hidden');
+        else clearBtn.classList.add('hidden');
+      }
+      renderProducts();
+    }
+
+    function clearSearch() {
+      const searchInput = document.getElementById('storeSearchInput');
+      if (searchInput) searchInput.value = '';
+      searchQuery = '';
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (clearBtn) clearBtn.classList.add('hidden');
+      renderProducts();
+    }
+
+    // Sort Handler
+    function handleSortChange(sortVal) {
+      sortMethod = sortVal;
+      renderProducts();
+    }
+
+    // Render Product Cards (1000 x 1000 px clean background)
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      const noFound = document.getElementById('noProductsFound');
+      const countBadge = document.getElementById('productCountBadge');
+      if (!grid) return;
+
+      // Filter
+      let filtered = ALL_PRODUCTS.filter(p => {
+        // Category check
+        const matchesCat = (currentCategory === 'all') || 
+                           (currentCategory === 'bestsellers' && p.isBestSeller) ||
+                           (p.category === currentCategory);
+        
+        // Search query check
+        const matchesSearch = searchQuery === '' ||
+                              p.name.toLowerCase().includes(searchQuery) ||
+                              p.tagline.toLowerCase().includes(searchQuery) ||
+                              p.scentProfile.toLowerCase().includes(searchQuery) ||
+                              p.keyIngredients.some(k => k.toLowerCase().includes(searchQuery));
+
+        return matchesCat && matchesSearch;
+      });
+
+      // Sort
+      if (sortMethod === 'price_asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortMethod === 'price_desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortMethod === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      } else if (sortMethod === 'reviews') {
+        filtered.sort((a, b) => b.reviewCount - a.reviewCount);
+      }
+
+      if (countBadge) {
+        countBadge.innerText = filtered.length + ' productos';
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        if (noFound) noFound.classList.remove('hidden');
+        return;
+      }
+
+      if (noFound) noFound.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(prod => {
+        const starsHtml = '★'.repeat(Math.floor(prod.rating)) + (prod.rating % 1 !== 0 ? '½' : '');
+        const reviewsFormatted = prod.reviewCount > 1000 ? (prod.reviewCount / 1000).toFixed(1) + 'k' : prod.reviewCount;
+
+        return `
+          <div class="bg-white rounded-lg border border-[#d5d9d9] hover:border-[#d97706] hover:shadow-xl transition-all duration-300 flex flex-col justify-between overflow-hidden group">
+            
+            <!-- Product Image Stage (1000 x 1000 px clean background) -->
+            <div class="relative bg-[#fafafa] p-4 flex items-center justify-center border-b border-[#f0f0f0] overflow-hidden aspect-square">
+              
+              <!-- Badge -->
+              ${prod.badge ? `
+                <span class="absolute top-2 left-2 z-10 text-[10px] font-bold text-white px-2 py-0.5 rounded shadow-sm uppercase font-mono-code" style="background-color: ${prod.badgeColor || '#b12704'}">
+                  ${prod.badge}
+                </span>
+              ` : ''}
+
+              <!-- 1000 x 1000 Spec Marker -->
+              <span class="dim-badge absolute bottom-2 right-2 text-[8px] opacity-0 group-hover:opacity-100 transition-opacity">
+                1000 x 1000 PX
+              </span>
+
+              <!-- Product Image -->
+              <img 
+                src="${prod.imageUrl}" 
+                alt="${prod.name}" 
+                class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+              />
+
+              <!-- Quick View Trigger Overlay -->
+              <button 
+                onclick="openQuickView('${prod.id}')"
+                class="absolute inset-x-4 bottom-3 bg-[#131921]/90 hover:bg-[#ea580c] text-white text-xs font-bold py-1.5 rounded opacity-0 group-hover:opacity-100 transition-all duration-200 shadow-md flex items-center justify-center gap-1.5"
+              >
+                <i class="fa-solid fa-eye text-[#febd69]"></i>
+                <span>Vista Rápida</span>
+              </button>
+            </div>
+
+            <!-- Product Card Body -->
+            <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+              <div>
+                <!-- Category and Grit badge -->
+                <div class="flex items-center justify-between text-[11px] text-[#565959] mb-1">
+                  <span class="font-bold text-[#007185] uppercase tracking-wide">${prod.categoryLabel}</span>
+                  
+                </div>
+
+                <!-- Product Name -->
+                <h4 class="font-extrabold text-[#0f1111] text-sm leading-snug group-hover:text-[#d97706] transition-colors line-clamp-2">
+                  ${prod.name}
+                </h4>
+
+                <!-- Tagline -->
+                <p class="text-xs text-[#565959] line-clamp-1 mt-0.5">
+                  ${prod.tagline}
+                </p>
+
+                <!-- Rating -->
+                <div class="flex items-center gap-1.5 text-xs mt-2">
+                  <span class="text-[#f08804] font-bold">${starsHtml}</span>
+                  <span class="text-[#007185] font-bold">${prod.rating}</span>
+                  <span class="text-[#565959] text-[11px]">(${reviewsFormatted})</span>
+                </div>
+
+                <!-- Price and Prime -->
+                <div class="mt-2.5 border-t border-[#f0f0f0] pt-2">
+                  <div class="flex items-baseline gap-1.5">
+                    <span class="text-xs text-[#b12704] font-bold">-${prod.discountPercent}%</span>
+                    <span class="text-lg font-black text-[#0f1111]">${prod.price.toFixed(2)} €</span>
+                    <span class="text-[11px] text-[#565959] line-through">${prod.originalPrice.toFixed(2)} €</span>
+                  </div>
+
+                  <div class="flex items-center gap-1 mt-1 text-[11px] text-[#007600] font-bold">
+                    <i class="fa-solid fa-check"></i>
+                    <span>Envío GRATIS con Prime</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Buy Button -->
+              <div class="pt-2">
+                <button 
+                  onclick="addToCart('${prod.id}')"
+                  class="w-full bg-[#febd69] hover:bg-[#f3a847] text-[#111111] py-2 px-3 rounded-full font-bold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-sm active:scale-95"
+                >
+                  <i class="fa-solid fa-cart-shopping text-xs"></i>
+                  <span>Añadir a la cesta</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Add to Cart Logic
+    function addToCart(productId) {
+      const prod = ALL_PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+
+      const existing = cartItems.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cartItems.push({
+          id: prod.id,
+          name: prod.name,
+          price: prod.price,
+          quantity: 1,
+          imageUrl: prod.imageUrl
+        });
+      }
+
+      updateCartDisplay();
+      showToast('¡Añadido a la Cesta!', prod.name);
+    }
+
+    function updateCartDisplay() {
+      const totalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+      const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+      const cartBadge = document.getElementById('cartBadgeCount');
+      if (cartBadge) cartBadge.innerText = totalCount;
+
+      const drawerCount = document.getElementById('drawerCartCount');
+      if (drawerCount) drawerCount.innerText = totalCount;
+
+      const subtotalEl = document.getElementById('cartSubtotal');
+      if (subtotalEl) subtotalEl.innerText = subtotal.toFixed(2) + ' €';
+
+      const itemsList = document.getElementById('cartItemsList');
+      if (itemsList) {
+        if (cartItems.length === 0) {
+          itemsList.innerHTML = '<p class="text-xs text-[#555] py-4 text-center">Tu cesta está vacía.</p>';
+        } else {
+          itemsList.innerHTML = cartItems.map(item => `
+            <div class="flex items-center gap-3 p-2 bg-[#f7f8f8] rounded border border-[#e7e7e7]">
+              <img src="${item.imageUrl}" alt="${item.name}" class="w-12 h-12 object-contain bg-white rounded border border-[#ddd] p-1">
+              <div class="flex-1 text-xs">
+                <h5 class="font-bold text-[#111] line-clamp-1">${item.name}</h5>
+                <span class="text-[#b12704] font-black">${item.price.toFixed(2)} €</span>
+                <span class="text-[#555] ml-2">Cant: ${item.quantity}</span>
+              </div>
+              <button onclick="removeFromCart('${item.id}')" class="text-xs text-[#888] hover:text-[#b12704] p-1 font-bold">
+                ✕
+              </button>
+            </div>
+          `).join('');
+        }
+      }
+    }
+
+    function removeFromCart(productId) {
+      cartItems = cartItems.filter(item => item.id !== productId);
+      updateCartDisplay();
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById('cartModal');
+      if (modal) {
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('flex');
+      }
+    }
+
+    // Quick View Modal
+    function openQuickView(productId) {
+      const prod = ALL_PRODUCTS.find(p => p.id === productId);
+      if (!prod) return;
+
+      const content = document.getElementById('quickViewContent');
+      if (!content) return;
+
+      content.innerHTML = `
+        <div class="md:col-span-5 flex flex-col items-center justify-center p-4 bg-[#fafafa] rounded border border-[#eee]">
+          <div class="relative w-full aspect-square flex items-center justify-center p-4">
+            <span class="dim-badge absolute top-2 left-2 text-[9px]">1000 x 1000 PX</span>
+            <img src="${prod.imageUrl}" alt="${prod.name}" class="max-h-64 object-contain">
+          </div>
+          <span class="text-[11px] text-[#555] mt-2">Imagen oficial de catálogo en alta resolución</span>
+        </div>
+
+        <div class="md:col-span-7 space-y-3">
+          <span class="bg-[#183124] text-[#febd69] text-[10px] font-mono-code font-bold px-2.5 py-0.5 rounded uppercase">
+            ${prod.categoryLabel}
+          </span>
+          <h3 class="text-xl font-black text-[#0f1111] uppercase leading-tight">${prod.name}</h3>
+          <p class="text-xs text-[#ea580c] font-bold">${prod.tagline}</p>
+          <p class="text-xs text-[#444] leading-relaxed">${prod.description}</p>
+
+          <div class="bg-[#f7f8f8] p-3 rounded border border-[#e7e7e7] space-y-1 text-xs">
+            <div><strong class="text-[#111]">Perfil Aromático:</strong> ${prod.scentProfile}</div>
+            <div><strong class="text-[#111]">Nivel de Exfoliación:</strong> ${prod.gritLevel} (${prod.gritScore}/5)</div>
+            <div><strong class="text-[#111]">Ingredientes Clave:</strong> ${prod.keyIngredients.join(', ')}</div>
+          </div>
+
+          <div class="flex items-baseline gap-2 pt-2">
+            <span class="text-2xl font-black text-[#0f1111]">${prod.price.toFixed(2)} €</span>
+            <span class="text-xs text-[#565959] line-through">${prod.originalPrice.toFixed(2)} €</span>
+            <span class="text-xs text-[#b12704] font-bold">Ahorro de ${prod.discountPercent}%</span>
+          </div>
+
+          <div class="pt-2 flex gap-2">
+            <button 
+              onclick="addToCart('${prod.id}'); closeQuickView();"
+              class="flex-1 bg-[#febd69] hover:bg-[#f3a847] text-[#111] py-2.5 rounded-full font-bold text-xs uppercase shadow-sm transition-colors"
+            >
+              Añadir a la Cesta
+            </button>
+            <button 
+              onclick="closeQuickView()"
+              class="bg-[#f0f2f2] hover:bg-[#e3e6e6] text-[#111] px-4 py-2.5 rounded-full font-bold text-xs uppercase border border-[#d5d9d9]"
+            >
+              Cerrar
+            </button>
+          </div>
+        </div>
+      `;
+
+      const modal = document.getElementById('quickViewModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+    }
+
+    function closeQuickView() {
+      const modal = document.getElementById('quickViewModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    // Specs Modal
+    function toggleSpecsModal() {
+      const modal = document.getElementById('specsModal');
+      if (modal) {
+        modal.classList.toggle('hidden');
+        modal.classList.toggle('flex');
+      }
+    }
+
+    // Follow Store toggle
+    function toggleFollowStore() {
+      isFollowing = !isFollowing;
+      const icon = document.getElementById('followIcon');
+      const text = document.getElementById('followText');
+      const btn = document.getElementById('followStoreBtn');
+
+      if (isFollowing) {
+        if (icon) icon.className = 'fa-solid fa-check text-green-400';
+        if (text) text.innerText = 'Siguiendo Tienda';
+        if (btn) btn.className = 'bg-[#0f4d2a] text-white border border-[#2d5a43] text-xs font-bold uppercase px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm';
+        showToast('¡Siguiendo a Dr. Squatch!', 'Recibirás avisos de nuevos lanzamientos y ofertas exclusivas.');
+      } else {
+        if (icon) icon.className = 'fa-solid fa-plus text-[#febd69]';
+        if (text) text.innerText = 'Seguir Tienda';
+        if (btn) btn.className = 'bg-[#183124] hover:bg-[#244b37] text-white border border-[#2d5a43] text-xs font-bold uppercase px-3.5 py-1.5 rounded-full transition-all flex items-center gap-1.5 shadow-sm';
+      }
+    }
+
+    function shareStore() {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(window.location.href);
+        showToast('¡Enlace Copiado!', 'El enlace de la Storefront de Dr. Squatch se ha copiado al portapapeles.');
+      }
+    }
+
+    // Toast helper
+    function showToast(title, desc) {
+      const toast = document.getElementById('toastNotification');
+      const titleEl = document.getElementById('toastTitle');
+      const descEl = document.getElementById('toastDesc');
+      if (!toast) return;
+
+      if (titleEl) titleEl.innerText = title;
+      if (descEl) descEl.innerText = desc;
+
+      toast.classList.remove('hidden', 'translate-y-10');
+      toast.classList.add('translate-y-0');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-10');
+        setTimeout(() => toast.classList.add('hidden'), 300);
+      }, 3500);
+    }
+  </script>
+</body>
+</html>
