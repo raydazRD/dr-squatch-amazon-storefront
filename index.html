@@ -322,54 +322,42 @@
       </div>
 
       <!-- Background High-Res Banner -->
-      <div class="relative h-[320px] sm:h-[380px] md:h-[440px] lg:h-[480px] w-full overflow-hidden flex items-center">
-        <img 
-          src="https://images.unsplash.com/photo-1511497584788-87676104235f?auto=format&fit=crop&w=3000&h=600&q=90" 
-          alt="Dr. Squatch Bosque y Jabón" 
-          class="absolute inset-0 w-full h-full object-cover object-center opacity-40 filter contrast-125 group-hover:scale-105 transition-transform duration-700"
-        />
-        <!-- Vignette & Forest Gradients -->
-        <div class="absolute inset-0 bg-gradient-to-r from-[#0a150f] via-[#0f281c]/80 to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-[#0a150f] via-transparent to-transparent"></div>
+<div class="relative h-[320px] sm:h-[380px] md:h-[440px] lg:h-[480px] w-full overflow-hidden flex items-center">
+  <img 
+    src="assets/TRES-PRODUCTOS%20copia.jpg" 
+    alt="Dr. Squatch Storefront" 
+    class="absolute inset-0 w-full h-full object-cover object-center opacity-40 filter contrast-125 group-hover:scale-105 transition-transform duration-700"
+  >
+  <!-- Vignette & Forest Gradients -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[#0a150f] via-[#0f281c]/80 to-transparent"></div>
+  <div class="absolute inset-0 bg-gradient-to-t from-[#0a150f] via-transparent to-transparent"></div>
+
+  <!-- Contenido de texto centrado verticalmente y alineado a la izquierda -->
+  <div class="relative z-20 max-w-2xl px-6 sm:px-12 text-white space-y-3 sm:space-y-4 flex flex-col justify-center items-start text-left h-full">
+    <div class="inline-flex items-center gap-2 bg-[#d97706] text-[#0e1713] px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
+      <i class="fa-solid fa-tree"></i>
+      <span>TIENDA OFICIAL DE LA MARCA EN AMAZON</span>
+    </div>
+    <h2 class="text-2xl sm:text-4xl md:text-5xl font-black font-display">
+      SIÉNTETE COMO UN HOMBRE. HUELE COMO UN CAMPEÓN.
+    </h2>
+    <p class="text-sm sm:text-base text-gray-200">
+      Jabones artesanales saponificados en frío, desodorantes sin aluminio y cuidado capilar botánico.
+    </p>
+    <div class="flex flex-wrap gap-4 pt-2">
+      <a href="#" class="bg-[#d97706] hover:bg-amber-600 text-[#0e1713] font-bold px-6 py-3 rounded-lg transition-colors inline-flex items-center gap-2">
+        EXPLORAR JABONES MÁS VENDIDOS <i class="fa-solid fa-arrow-right"></i>
+      </a>
+      <a href="#" class="border border-[#d97706] text-[#d97706] hover:bg-[#d97706]/10 font-bold px-6 py-3 rounded-lg transition-colors">
+        VER PACKS DE AHORRO
+      </a>
+    </div>
+  </div>
+</div>
 
         
 
-        <!-- Hero Content in the Safe Zone -->
-        <div class="relative z-20 max-w-2xl px-6 sm:px-12 py-8 text-white space-y-3 sm:space-y-4">
-          <div class="inline-flex items-center gap-2 bg-[#d97706] text-[#0e1713] font-mono-code text-[11px] font-extrabold uppercase px-3 py-1 rounded shadow">
-            <i class="fa-solid fa-tree"></i>
-            <span>TIENDA OFICIAL DE LA MARCA EN AMAZON</span>
-          </div>
-
-          <h2 class="text-2xl sm:text-4xl md:text-5xl font-black font-display tracking-tight text-white uppercase leading-none drop-shadow-lg">
-            SIÉNTETE COMO UN HOMBRE. HUELE COMO UN CAMPEÓN.
-          </h2>
-
-          <p class="text-xs sm:text-base text-[#e0e8e3] max-w-xl leading-relaxed">
-            Jabones artesanales saponificados en frío, desodorantes sin aluminio y cuidado capilar botánico.
-          </p>
-
-          <!-- CTAs -->
-          <div class="pt-2 flex flex-wrap gap-3">
-            <button 
-              onclick="filterByCategory('jabones')"
-              class="bg-[#d97706] hover:bg-[#ea580c] text-white font-extrabold text-xs sm:text-sm uppercase tracking-wider px-5 py-2.5 rounded shadow-lg transition-all transform hover:-translate-y-0.5 flex items-center gap-2"
-            >
-              <span>Explorar Jabones Más Vendidos</span>
-              <i class="fa-solid fa-arrow-right"></i>
-            </button>
-
-            <button 
-              onclick="filterByCategory('packs')"
-              class="bg-[#183124]/90 hover:bg-[#254d38] text-[#febd69] border border-[#d97706]/60 font-bold text-xs sm:text-sm uppercase tracking-wider px-4 py-2.5 rounded shadow transition-all"
-            >
-              <span>Ver Packs de Ahorro</span>
-            </button>
-          </div>
-        </div>
-
-      </div>
-    </div>
+        
   </section>
 
   <!-- ========================================================================= -->
